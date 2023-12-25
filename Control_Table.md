@@ -18,8 +18,8 @@
 
 | Address | Size(Byte) |                    Data Name                    | Access | Initial<br />Value |                              Range                               |          Unit           |
 |:-------:|:----------:|:-----------------------------------------------:|:------:|:------------------:|:----------------------------------------------------------------:|:-----------------------:|
-|    0    |     2      |      [Model Number](#Model Numbern)      |   RW    |         -          |                                -                                 |            -            |
-| 6 | 1 | [Firmware Version](#Firmware Version) | R | - | - | - |
+|    0    |     2      |      [Model Number](#Model-Numbern)      |   RW    |         -          |                                -                                 |            -            |
+| 6 | 1 | [Firmware Version](#Firmware-Version) | R | - | - | - |
 |    7    |     1      |                    [ID](#id)                    |   RW   |         1          | 0 ~ 252  |            -            |
 |    8    |     1      |             [Baud Rate](#baud-rate)             |   RW   |         4          |                              0 ~ 4                               |            -            |
 |   10    |     1      |            [Drive Mode](#drive-mode)            |   RW   |         2          |                              0 ~ 3                              |            -            |
