@@ -584,56 +584,49 @@ The Size of data varies from 1 ~ 4 bytes depend on their usage. Please check the
 
 The Control Table has two different access properties. ‘RW’ property stands for read and write access permission while ‘R’ stands for read only access permission. Data with the read only property cannot be changed by the WRITE Instruction. Read only property(‘R’) is generally used for measuring and monitoring purpose, and read write property(‘RW’) is used for controlling device.
 
-### [2.2.Control Table of EEPROM Area]()
-
-| Address | Size(Byte) |               Data Name               | Access | Initial<br />Value |                 Range                 |               Unit               |
-| :-----: | :--------: | :------------------------------------: | :----: | :----------------: | :------------------------------------: | :-------------------------------: |
-|    0    |     2     |       [Model Number](#model-number)       |   R   |        5210        |                   -                   |                 -                 |
-|    2    |     4     |  [Model Information](#model-information)  |   R   |         -         |                   -                   |                 -                 |
-|    6    |     1     |   [Firmware Version](#firmware-version)   |   R   |         -         |                   -                   |                 -                 |
-|    7    |     1     |                 [ID](#id)                 |   RW   |         1         |                0 ~ 252                |                 -                 |
-|    8    |     1     |          [Baud Rate](#baud-rate)          |   RW   |         4         |                 0 ~ 4                 |                 -                 |
-|   10   |     1     |         [Drive Mode](#drive-mode)         |   RW   |         0         |                 0 ~ 3                 |                 -                 |
-|   11   |     1     |     [Operating Mode](#operating-mode)     |   RW   |         4         |                 4、17                 |                 -                 |
-|   20   |     4     |      [Homing Offset](#homing-offset)      |   RW   |         0         |           0 ~`<br>` 32,768           |             1 [count]             |
-|   31   |     1     |  [Temperature Limit](#temperature-limit)  |   RW   |         80         |                0 ~ 100                |            1 [&deg;C]            |
-|   36   |     2     |          [PWM Limit](#pwm-limit)          |   RW   |        1500        |               0 ~ 37,500               |           0.000026 [%]           |
-|   38   |     2     |      [Current Limit](#current-limit)      |   RW   |        2000        |               0 ~ 15,000               |            2.5177 [mA]            |
-|   40   |     4     | [Acceleration Limit](#acceleration-limit) |   RW   |        2000        |             0 ~ 3,992,644             | 1 [rev/min `<sup>`2 `</sup>`] |
-|   44   |     4     |     [Velocity Limit](#velocity-limit)     |   RW   |       2,000       |               0 ~ 6,000               |          0.01 [rev/min]          |
-|   48   |     4     | [Max Position Limit](#max-position-limit) |   RW   |       16,384       | -2,147,483,648 ~`<br>` 2,147,483,648 |             1 [count]             |
-|   52   |     4     | [Min Position Limit](#min-position-limit) |   RW   |      -16,384      | -2,147,483,648 ~`<br>` 2,147,483,648 |             1 [count]             |
-
-### [2.3.Control Table of RAM Area]()
-
-| Address | Size(Byte) |                  Data Name                  | Access | Initial<br />Value |                         Range                         |          Unit          |
-| :-----: | :--------: | :------------------------------------------: | :----: | :----------------: | :----------------------------------------------------: | :---------------------: |
-|   512   |     1     |         [Torque Enable](#torque-enable)         |   RW   |         0         |                         0 ~ 1                         |            -            |
-|   518   |     1     | [Hardware Error Status](#hardware-error-status) |   R   |         0         |                        0 ~ 254                        |            -            |
-|   522   |     2     |                [Profile Time]()                |   RW   |        2000        |                       0 ~ 65,536                       |        1 [msec]        |
-|   524   |     2     |      [Velocity I Gain](#velocity-pi-gain)      |   RW   |         0         |                       0 ~ 32,767                       |            -            |
-|   526   |     2     |      [Velocity P Gain](#velocity-pi-gain)      |   RW   |         50         |                       0 ~ 32,767                       |            -            |
-|   528   |     2     |      [Position D Gain](#position-pid-gain)      |   RW   |         50         |                       0 ~ 32,767                       |            -            |
-|   530   |     2     |      [Position I Gain](#position-pid-gain)      |   RW   |         5         |                       0 ~ 32,767                       |            -            |
-|   532   |     2     |      [Position P Gain](#position-pid-gain)      |   RW   |        2000        |                       0 ~ 32,767                       |            -            |
-|   536   |     2     |  [Feedforward 2nd Gain](#feedforward-2nd-gain)  |   RW   |        2000        |                       0 ~ 32,767                       |            -            |
-|   538   |     2     |  [Feedforward 1st Gain](#feedforward-1st-gain)  |   RW   |        150        |                       0 ~ 32,767                       |            -            |
-|   550   |     2     |          [Goal Current](#goal-current)          |   RW   |         -         |        -Current Limit(38) ~``Current Limit(38)        |       2.5177 [mA]       |
-|   552   |     4     |         [Goal Velocity](#goal-velocity)         |   RW   |         -         |       -Velocity Limit(44) ~``Velocity Limit(44)       |     0.01 [rev/min]     |
-|   556   |     4     |  [Profile Acceleration](#profile-acceleration)  |   RW   |         -         |              0 ~``Acceleration Limit(40)              |    1 [rev/min ^2^ ]    |
-|   560   |     4     |      [Profile Velocity](#profile-velocity)      |   RW   |         -         |                0 ~``Velocity Limit(44)                |     0.01 [rev/min]     |
-|   564   |     4     |         [Goal Position](#goal-position)         |   RW   |         -         | Min Position Limit(52) ~``<br />Max Position Limit(48) |        1[pulse]        |
-|   568   |     2     |         [Realtime Tick](#realtime-tick)         |   R   |         -         |                       0 ~ 32,767                       |        1 [msec]        |
-|   571   |     1     |         [Moving Status](#moving-status)         |   R   |         -         |                           -                           |            -            |
-|   572   |     2     |           [Present PWM](#present-pwm)           |   R   |         -         |                           -                           |       0.0096 [%]       |
-|   574   |     2     |       [Present Current](#present-current)       |   R   |         -         |                           -                           |       2.5177 [mA]       |
-|   576   |     4     |      [Present Velocity](#present-velocity)      |   R   |         -         |                           -                           | 0.0078125 [count/100us] |
-|   580   |     4     |      [Present Position](#present-position)      |   R   |         -         |                           -                           |        1 [count]        |
-|   584   |     4     |   [Velocity Trajectory](#velocity-trajectory)   |   R   |         -         |                           -                           |     0.01 [rev/min]     |
-|   588   |     4     |   [Position Trajectory](#position-trajectory)   |   R   |         -         |                           -                           |        1 [pulse]        |
-|   594   |     1     |   [Present Temperature](#present-temperature)   |   R   |         -         |                           -                           |         1 [°C]         |
-|   878   |     1     |          [Backup Ready](#backup-ready)          |   R   |         -         |                         0 ~ 1                         |            -            |
-
+### [2.2.Control Table  Configuration]()
+| Address | Size(Byte) |                    Data Name                    | Access | 	    Default	     |                              Range                               |          Unit           |
+|:-------:|:----------:|:-----------------------------------------------:|:------:|:------------------:|:----------------------------------------------------------------:|:-----------------------:|
+|    0    |     2      |          [Model Number](#model-number)          |   R    |        5210        |                                -                                 |            -            |
+|    2    |     4      |     [Model Information](#model-information)     |   R    |         -          |                                -                                 |            -            |
+|    6    |     1      |      [Firmware Version](#firmware-version)      |   R    |         -          |                                -                                 |            -            |
+|    7    |     1      |                    [ID](#id)                    |   RW   |         1          |                             0 ~ 252                              |            -            |
+|    8    |     1      |             [Baud Rate](#baud-rate)             |   RW   |         4          |                              0 ~ 4                               |            -            |
+|   10    |     1      |            [Drive Mode](#drive-mode)            |   RW   |         2          |                              0 ~ 3                               |            -            |
+|   11    |     1      |        [Operating Mode](#operating-mode)        |   RW   |         4          |                        4、17                                     |            -            |
+|   20    |     4      |         [Homing Offset](#homing-offset)         |   RW   |         0          |                0 ~<br> 32,768                                    |        1 [count]        |
+|   31    |     1      |     [Temperature Limit](#temperature-limit)     |   RW   |         80         |                             0 ~ 100                              |       1 [&deg;C]        |
+|   36    |     2      |             [PWM Limit](#pwm-limit)             |   RW   |       30,000       |                            0 ~ 37,500                            |       0.000026 [%]      |
+|   38    |     2      |         [Current Limit](#current-limit)         |   RW   |       15,000       |                            0 ~ 15,000                            |       2.5177 [mA]       |
+|   44    |     4      |        [Velocity Limit](#velocity-limit)        |   RW   |       2,000        |                            0 ~ 4,600                             |     0.01 [rev/min]      |
+|   48    |     4      |    [Max Position Limit](#max-position-limit)    |   RW   |      16,384        |   -2,147,483,648 ~<br> 2,147,483,648                             |        1 [count]        |
+|   52    |     4      |    [Min Position Limit](#min-position-limit)    |   RW   |      -16,384       |      -2,147,483,648 ~<br> 2,147,483,648                          |        1 [count]        |
+|   512   |     1      |          [Torque Enable](#torque-enable)        |   RW   |         0          |                        0 ~ 1                                     |            -            |
+|   518   |     1      | [Hardware Error Status](#hardware-error-status) |   R    |         0          |                          0 ~ 254                                 |            -            |
+|   520   |     2      | [Profile Acceleration Time](#profile-acc-time)  |   RW   |        700         |                     0 ~ 65,536                                   |         1 [msec]        |
+|   522   |     2      |       [Profile Time](#profile-time)             |   RW   |        2000        |                     0 ~ 65,536                                   |         1 [msec]        |
+|   524   |     2      |       [Velocity I Gain](#velocity-pi-gain)      |   RW   |        0           |                     0 ~ 32,767                                   |            -            |
+|   526   |     2      |       [Velocity P Gain](#velocity-pi-gain)      |   RW   |        300         |                     0 ~ 32,767                                   |            -            |
+|   528   |     2      |       [Position D Gain](#position-pid-gain)     |   RW   |         0          |                     0 ~ 32,767                                   |            -            |
+|   530   |     2      |       [Position I Gain](#position-pid-gain)     |   RW   |         250        |                     0 ~ 32,767                                   |            -            |
+|   532   |     2      |       [Position P Gain](#position-pid-gain)     |   RW   |        9000        |                     0 ~ 32,767                                   |            -            |
+|   536   |     2      |   [Feedforward 2nd Gain](#feedforward-2nd-gain) |   RW   |         20200      |                     0 ~ 32,767                                   |            -            |
+|   538   |     2      |   [Feedforward 1st Gain](#feedforward-1st-gain) |   RW   |         2020       |                     0 ~ 32,767                                   |            -            |
+|   550   |     2      |           [Goal Current](#goal-current)         |   RW   |         -          |     -Current Limit(38) ~<br> Current Limit(38)                   |         2.5177 [mA]     |
+|   552   |     4      |          [Goal Velocity](#goal-velocity)        |   RW   |         -          |    -Velocity Limit(44) ~<br> Velocity Limit(44)                  |     0.01 [rev/min]      |
+|   556   |     4      |   [Profile Acceleration](#profile-acceleration) |   RW   |         -          |           0 ~<br> Acceleration Limit(40)                         | 1 [rev/min<sup>2</sup>] |
+|   560   |     4      |       [Profile Velocity](#profile-velocity)     |   RW   |         -          |             0 ~<br> Velocity Limit(44)                           |     0.01 [rev/min]      |
+|   564   |     4      |          [Goal Position](#goal-position)        |   RW   |         -          | Min Position Limit(52) ~<br> Max Position Limit(48)              |        1[pulse]         |
+|   568   |     2      |          [Realtime Tick](#realtime-tick)        |   R    |         -          |                     0 ~ 32,767                                   |        1 [msec]         |
+|   571   |     1      |          [Moving Status](#moving-status)        |   R    |         -          |                          -                                       |            -            |
+|   572   |     2      |            [Present PWM](#present-pwm)          |   R    |         -          |                          -                                       |       0.0096 [%]        |
+|   574   |     2      |        [Present Current](#present-current)      |   R    |         -          |                          -                                       |         2.5177 [mA]     |
+|   576   |     4      |       [Present Velocity](#present-velocity)     |   R    |         -          |                          -                                       | 0.0078125 [count/100us] |
+|   580   |     4      |       [Present Position](#present-position)     |   R    |         -          |                          -                                       |        1 [count]        |
+|   584   |     4      |    [Velocity Trajectory](#velocity-trajectory)  |   R    |         -          |                          -                                       |     0.01 [rev/min]      |
+|   588   |     4      |    [Position Trajectory](#position-trajectory)  |   R    |         -          |                          -                                       |        1 [pulse]        |
+|   594   |     1      |    [Present Temperature](#present-temperature)  |   R    |         -          |                          -                                       |       1 [&deg;C]        |
+|   878   |     1      |           [Backup Ready](#backup-ready)         |   R    |         -          |                        0 ~ 1                                     |            -            |
 ### [2.4.Control table description]()
 
 NOTE : Data in the EEPROM Area can only be written when the value of [Torque Enable(512)] is cleared to `0`.
