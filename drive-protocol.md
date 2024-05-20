@@ -65,10 +65,8 @@ The field that indicates the length of packet field.
 | 0x10 |         [Clear](#ins-clear)         |                                           Instruction to reset certain information                                           |
 | 0x20 | [Control Table Backup](#ins-backup) |              Instruction to store current Control Table status data to a Backup area or to restore EEPROM data.              |
 | 0x55 |    [Status(Return)](#ins-status)    |                                           Return packet for the Instruction Packet                                           |
-| 0x82 |     [Sync Read](#ins-sync-read)     |               For multiple devices, Instruction to read data from the same Address with the same length at once               |
 | 0x83 |    [Sync Write](#ins-sync-write)    |               For multiple devices, Instruction to write data on the same Address with the same length at once               |
 | 0x8A |  [Fast Sync Read](#ins-sync-read)  | For multiple devices, Instruction to read data from the same Address with the same length at once with shorter status packet |
-| 0x8B | [Fast Sync Write](#ins-sync-write) | For multiple devices, Instruction to write data from the same Address with the same length at once with shorter status packet |
 
 #### [1.4.6.Parameters]()
 
@@ -159,7 +157,7 @@ Status Packet is the response packet transmitted from the device to a main contr
 
 | Header 1 | Header 2 | Header 3 | Reserved | Packet ID | Length 1 | Length 2 | Instruction | ERR | Param | Param | Param | CRC 1 | CRC2 |
 | -------- | -------- | -------- | -------- | --------- | -------- | -------- | ----------- | --- | ----- | ----- | ----- | ----- | ---- |
-| 0xFF     | 0xFF     | 0xFD     | 0x00     | ID        | Len_L    |          |             |     |       |       |       |       |      |
+| 0xFF     | 0xFF     | 0xFD     | 0x00     | ID        | Len_L    | Len_H    | Instruction |Error|Param 1|   ... |Param N|CRC_L  |CRC_LH|
 
 #### [1.5.1.Instruction]()
 
