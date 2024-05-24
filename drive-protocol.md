@@ -501,14 +501,14 @@ Note that given examples use the following abbreviation to provide clear informa
 
 **Example**
 
-- ID1(JA40) : Write 150(0x00000096) to Goal Position(116, 0x0074, 4[byte])
-- ID2(JA40) : Write 170(0x000000AA) to Goal Position(116, 0x0074, 4[byte])
+- ID1(JA40) : Write 150(0x00000096) to Goal Position(564, 0x0074, 4[byte])
+- ID2(JA40) : Write 170(0x000000AA) to Goal Position(564, 0x0074, 4[byte])
 
 **Fast Sync Write Instruction Packet**
 
 |  H1  |  H2  |  H3  | RSRV | Packet ID | LEN1 | LEN2 | INST |  P1  |  P2  |  P3  |  P4  |
 | :--: | :--: | :--: | :--: | :-------: | :--: | :--: | :--: | :--: | :--: | :--: | :--: |
-| 0xFF | 0xFF | 0xFD | 0x00 |   0xFE   | 0x11 | 0x00 | 0x8B | 0x74 | 0x00 | 0x04 | 0x00 |
+| 0xFF | 0xFF | 0xFD | 0x00 |   0xFE   | 0x11 | 0x00 | 0x8B | 0x34 | 0x02 | 0x04 | 0x00 |
 
 |  P5  |  P6  |  P7  |  P8  |  P9  | P10 | P11 | P12 | P13 | P14 | CRC 1 | CRC 2 |
 | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :---: | :---: |
