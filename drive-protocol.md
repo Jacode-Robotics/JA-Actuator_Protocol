@@ -54,19 +54,19 @@ The field that indicates the length of packet field.
 
 #### [1.4.5.Instruction](#instruction)
 
-|   Value   |           Instructions           |                                                         Description                                                         |
-| :-------: | :------------------------------: | :--------------------------------------------------------------------------------------------------------------------------: |
-|   0x01   |          [Ping](#ins-ping)          |               Instruction that checks whether the Packet has arrived to a device with the same ID as Packet ID               |
-|   0x02   |          [Read](#ins-read)          |                                           Instruction to read data from the Device                                           |
-|   0x03   |         [Write](#ins-write)         |                                           Instruction to write data on the Device                                           |
-|   0x06   |     [Factory Reset](#ins-reset)     |                      Instruction that resets the Control Table to its initial factory default settings                      |
-|   0x08   |        [Reboot](#ins-reboot)        |                                               Instruction to reboot the Device                                               |
-|   0x10   |         [Clear](#ins-clear)         |                                           Instruction to reset certain information                                           |
-|   0x20   | [Control Table Backup](#ins-backup) |              Instruction to store current Control Table status data to a Backup area or to restore EEPROM data.              |
-|   0x55   |    [Status(Return)](#ins-status)    |                                           Return packet for the Instruction Packet                                           |
-|   0x82   |     [Sync Read](#ins-sync-read)     |              For multiple devices, Instruction to read data frome the same Address with the same length at once              |
-| 0x83/0x8B |        [Fast Sync Write]()        | For multiple devices, Instruction to write data to the same Address with the same length at once with shorter status packet |
-|   0x8A   |        [Fast Sync Read]()        | For multiple devices, Instruction to read data from the same Address with the same length at once with shorter status packet |
+|   Value   |             Instructions            |                                                         Description                                                         |
+| :-------: | :---------------------------------: | :--------------------------------------------------------------------------------------------------------------------------: |
+|   0x01    |          [Ping](#ins-ping)          |               Instruction that checks whether the Packet has arrived to a device with the same ID as Packet ID               |
+|   0x02    |          [Read](#ins-read)          |                                           Instruction to read data from the Device                                           |
+|   0x03    |         [Write](#ins-write)         |                                           Instruction to write data on the Device                                           |
+|   0x06    |     [Factory Reset](#ins-reset)     |                      Instruction that resets the Control Table to its initial factory default settings                      |
+|   0x08    |        [Reboot](#ins-reboot)        |                                               Instruction to reboot the Device                                               |
+|   0x10    |         [Clear](#ins-clear)         |                                           Instruction to reset certain information                                           |
+|   0x20    | [Control Table Backup](#ins-backup) |              Instruction to store current Control Table status data to a Backup area or to restore EEPROM data.              |
+|   0x55    |    [Status(Return)](#ins-status)    |                                           Return packet for the Instruction Packet                                           |
+|   0x82    |     [Sync Read](#ins-sync-read)     |              For multiple devices, Instruction to read data frome the same Address with the same length at once              |
+| 0x83/0x8B |          [Fast Sync Write]()        | For multiple devices, Instruction to write data to the same Address with the same length at once with shorter status packet |
+|   0x8A    |          [Fast Sync Read]()         | For multiple devices, Instruction to read data from the same Address with the same length at once with shorter status packet |
 
 #### [1.4.6.Parameters]()
 
@@ -627,6 +627,7 @@ The Control Table has two different access properties. ‘RW’ property stands 
 |   588   |     4      |    [Position Trajectory](#position-trajectory)  |   R    |         -          |                          -                                       |        1 [pulse]        |
 |   594   |     1      |    [Present Temperature](#present-temperature)  |   R    |         -          |                          -                                       |       1 [&deg;C]        |
 |   878   |     1      |           [Backup Ready](#backup-ready)         |   R    |         -          |                        0 ~ 1                                     |            -            |
+
 ### [2.4.Control table description]()
 
 NOTE : Data in the EEPROM Area can only be written when the value of [Torque Enable(512)] is cleared to `0`.
