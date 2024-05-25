@@ -1,8 +1,8 @@
-## [1.Introduction]()
+# [1.Introduction]()
 
 To control JA-Actuator, communication should be established according to the protocol of JA-Actuator.
 
-### [1.1.packet](#packet)
+## [1.1.packet](#packet)
 
 Main Controller and JA-Actuator communicate each other by sending and receiving data called Packet. Packet has two kinds: Instruction Packet, which Main Controller sends to control JA-Actuator, and Status Packet, which JA-Actuator responses to Main Controller.
 
@@ -14,7 +14,7 @@ ID is a specific number for distinction of each JA-Actuator when several JA-Actu
 
 If JA-Actuator with the same ID is connected, packet will collide and network problem will occur. Thus, set ID as such that there is no JA-Actuator with the same ID.
 
-**NOTE** : JA-Actuator’s initial ID is 1 at the factory condition.
+**NOTE : JA-Actuator’s initial ID is 1 at the factory condition.**
 
 ### [1.4.Instruction Packet]()
 
@@ -41,7 +41,6 @@ Uses 0X00 (Note that Reserved does not use 0XFD). The Reserved functions the sam
 The field that indicates an ID of the device that should receive the Instruction Packet and process it
 
 1. Range : 0 ~ 252 (0x00 ~ 0xFC), which is a total of 253 numbers that can be used
-2. Broadcast ID : 254 (0xFE), which makes all connected devices execute the Instruction Packet
 
 #### [1.4.4.Length]()
 
@@ -55,18 +54,19 @@ The field that indicates the length of packet field.
 
 #### [1.4.5.Instruction](#instruction)
 
-| Value |           Instructions           |                                                          Description                                                          |
-| :---: | :------------------------------: | :---------------------------------------------------------------------------------------------------------------------------: |
-| 0x01 |          [Ping](#ins-ping)          |               Instruction that checks whether the Packet has arrived to a device with the same ID as Packet ID               |
-| 0x02 |          [Read](#ins-read)          |                                           Instruction to read data from the Device                                           |
-| 0x03 |         [Write](#ins-write)         |                                            Instruction to write data on the Device                                            |
-| 0x06 |     [Factory Reset](#ins-reset)     |                       Instruction that resets the Control Table to its initial factory default settings                       |
-| 0x08 |        [Reboot](#ins-reboot)        |                                               Instruction to reboot the Device                                               |
-| 0x10 |         [Clear](#ins-clear)         |                                           Instruction to reset certain information                                           |
-| 0x20 | [Control Table Backup](#ins-backup) |              Instruction to store current Control Table status data to a Backup area or to restore EEPROM data.              |
-| 0x55 |    [Status(Return)](#ins-status)    |                                           Return packet for the Instruction Packet                                           |
-| 0x83 |    [Sync Write](#ins-sync-write)    |               For multiple devices, Instruction to write data on the same Address with the same length at once               |
-| 0x8A |  [Fast Sync Read](#ins-sync-read)  | For multiple devices, Instruction to read data from the same Address with the same length at once with shorter status packet |
+|   Value   |           Instructions           |                                                         Description                                                         |
+| :-------: | :------------------------------: | :--------------------------------------------------------------------------------------------------------------------------: |
+|   0x01   |          [Ping](#ins-ping)          |               Instruction that checks whether the Packet has arrived to a device with the same ID as Packet ID               |
+|   0x02   |          [Read](#ins-read)          |                                           Instruction to read data from the Device                                           |
+|   0x03   |         [Write](#ins-write)         |                                           Instruction to write data on the Device                                           |
+|   0x06   |     [Factory Reset](#ins-reset)     |                      Instruction that resets the Control Table to its initial factory default settings                      |
+|   0x08   |        [Reboot](#ins-reboot)        |                                               Instruction to reboot the Device                                               |
+|   0x10   |         [Clear](#ins-clear)         |                                           Instruction to reset certain information                                           |
+|   0x20   | [Control Table Backup](#ins-backup) |              Instruction to store current Control Table status data to a Backup area or to restore EEPROM data.              |
+|   0x55   |    [Status(Return)](#ins-status)    |                                           Return packet for the Instruction Packet                                           |
+|   0x82   |     [Sync Read](#ins-sync-read)     |              For multiple devices, Instruction to read data frome the same Address with the same length at once              |
+| 0x83/0x8B |        [Fast Sync Write]()        | For multiple devices, Instruction to write data to the same Address with the same length at once with shorter status packet |
+|   0x8A   |        [Fast Sync Read]()        | For multiple devices, Instruction to read data from the same Address with the same length at once with shorter status packet |
 
 #### [1.4.6.Parameters]()
 
@@ -155,9 +155,9 @@ unsigned short update_crc(unsigned short crc_accum, unsigned char *data_blk_ptr,
 
 Status Packet is the response packet transmitted from the device to a main controller. Note that it has the same construction as the Instruction Packet except the ERROR field is added.
 
-| Header 1 | Header 2 | Header 3 | Reserved | Packet ID | Length 1 | Length 2 | Instruction | ERR | Param | Param | Param | CRC 1 | CRC2 |
-| -------- | -------- | -------- | -------- | --------- | -------- | -------- | ----------- | --- | ----- | ----- | ----- | ----- | ---- |
-| 0xFF     | 0xFF     | 0xFD     | 0x00     | ID        | Len_L    | Len_H    | Instruction |Error|Param 1|   ... |Param N|CRC_L  |CRC_LH|
+| Header 1 | Header 2 | Header 3 | Reserved | Packet ID | Length 1 | Length 2 | Instruction | ERR   | Param   | Param | Param   | CRC 1 | CRC2   |
+| -------- | -------- | -------- | -------- | --------- | -------- | -------- | ----------- | ----- | ------- | ----- | ------- | ----- | ------ |
+| 0xFF     | 0xFF     | 0xFD     | 0x00     | ID        | Len_L    | Len_H    | Instruction | Error | Param 1 | ...   | Param N | CRC_L | CRC_LH |
 
 #### [1.5.1.Instruction]()
 
@@ -191,7 +191,7 @@ Note that given examples use the following abbreviation to provide clear informa
 
 **Example**
 
-- ID1(JA40) : For Model Number 5210(0x0FAA), Version of Firmware 07(0x07)
+- ID1(JA52) : For Model Number 5210(0x145A), Version of Firmware 07(0x07)
 - Instruction Packet ID : 1
 
 **Ping Instruction Packet**
@@ -202,9 +202,9 @@ Note that given examples use the following abbreviation to provide clear informa
 
 **ID 1 Status Packet**
 
-|  H1  | H2   | H3   | RSRV | Packet ID | LEN1 | LEN2 | INST | ERR  | P1 | P2 | P3 | CRC 1 | CRC 2 |
-| :--: | ---- | ---- | :--: | :-------: | ---- | ---- | ---- | ---- | -- | -- | -- | :---: | ----- |
-| 0xFF | 0xFF | 0xFD | 0x00 |   0x01   | 0x07 | 0x00 | 0x55 | 0x00 | 5a | 17 | 07 |  10  | B9    |
+|  H1  | H2   | H3   | RSRV | Packet ID | LEN1 | LEN2 | INST | ERR  | P1   | P2   | P3   | CRC 1 | CRC 2 |
+| :--: | ---- | ---- | :--: | :-------: | ---- | ---- | ---- | ---- | ---- | ---- | ---- | :---: | ----- |
+| 0xFF | 0xFF | 0xFD | 0x00 |   0x01   | 0x07 | 0x00 | 0x55 | 0x00 | 0x5A | 0x14 | 0x07 | 0x10 | 0xB9  |
 
 #### [1.6.2.Read]()
 
@@ -231,7 +231,7 @@ Note that given examples use the following abbreviation to provide clear informa
 
 **Example**
 
-- ID1(JA40) : Present Position(580, 0x0244, 4[byte]) = 27796(0x00006C94)
+- ID1(JA52) : Present Position(580, 0x0244, 4[byte]) = 0(0x00000000)
 
 **Read Instruction Packet**
 
@@ -241,9 +241,9 @@ Note that given examples use the following abbreviation to provide clear informa
 
 **ID 1 Status Packet**
 
-|  H1  | H2   | H3   | RSRV | Packet ID | LEN1 | LEN2 | INST | ERR | P1 | P2 | P3 | P4 | CRC 1 | CRC 2 |
-| :--: | ---- | ---- | :--: | :-------: | ---- | ---- | ---- | --- | -- | -- | -- | -- | :---: | :---: |
-| 0xFF | 0xFF | 0xFD | 0x00 |   0x01   | 0x08 | 0x00 | 0x55 | 0x0 | 94 | 6C | 00 | 00 |  F5  |  AF  |
+|  H1  | H2   | H3   | RSRV | Packet ID | LEN1 | LEN2 | INST | ERR  | P1   | P2   | P3   | P4   | CRC 1 | CRC 2 |
+| :--: | ---- | ---- | :--: | :-------: | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | :---: | :---: |
+| 0xFF | 0xFF | 0xFD | 0x00 |   0x01   | 0x08 | 0x00 | 0x55 | 0x00 | 0x00 | 0x00 | 0x00 | 0x00 | 0xBF | 0xB8 |
 
 #### [1.6.3.Write]()
 
@@ -264,7 +264,7 @@ Note that given examples use the following abbreviation to provide clear informa
 
 **Example**
 
-- ID1(JA40) : Write 2000(0x000007D0) to Goal Position(564, 0x0234, 4[byte])
+- ID1(JA52) : Write 2000(0x000007D0) to Goal Position(564, 0x0234, 4[byte])
 
 **Write Instruction Packet**
 
@@ -316,7 +316,7 @@ Note that given examples use the following abbreviation to provide clear informa
 
 **Example**
 
-- ID1(JA40)
+- ID1(JA52)
 
 **Reboot Instruction Packet**
 
@@ -368,6 +368,9 @@ Note that given examples use the following abbreviation to provide clear informa
   - Velocity P.I Gains
   - Position P.I.D Gains
   - Feedforward 1st & 2nd Gains
+  - Profile Acceleration
+  - Profile Velocity
+  - Profile Time
 
 **Packet Parameters**
 
@@ -377,7 +380,7 @@ Note that given examples use the following abbreviation to provide clear informa
 
 **Example**
 
-- ID1(JA40) :Backup the Control Table.
+- ID1(JA52) :Backup the Control Table.
 
 **Backup Instruction Packet**
 
@@ -389,17 +392,16 @@ Note that given examples use the following abbreviation to provide clear informa
 
 |  H1  |  H2  |  H3  | RSRV | Packet ID | LEN1 | LEN2 | INST | ERR | CRC1 | CRC2 |
 | :--: | :--: | :--: | :--: | :-------: | :--: | :--: | :--: | :--: | :--: | :--: |
-| 0xFF | 0xFF | 0xFD | 0x00 |   0x01   | 0x04 | 0x00 | 0x55 | 0x00 |      |      |
+| 0xFF | 0xFF | 0xFD | 0x00 |   0x01   | 0x04 | 0x00 | 0x55 | 0x00 | 0xA1 | 0x0C |
 
-#### [1.6.8.Fast Sync Read]()
+#### 1.6.8 [Sync Read(0x82)]()
 
 **Description**
 
-- Instruction to read data from multiple devices simultaneously using one Instruction Packet
-- The Address and Data Length of the data must all be the same.
-- If the Address of the data is not continual, an Indirect Address can be used.
-- Status Packet will be returned in order, according to input ID in the Instruction Packet.
-- Packet ID field : 0xFE (Broadcast ID)
+* Instruction to read data from multiple devices simultaneously using one Instruction Packet
+* The Address and Data Length of the data must all be the same.
+* If the Address of the data is not continual, an Indirect Address can be used.
+* Status Packet will be returned in order, according to input ID in the Instruction Packet.
 
 **Packet Parameters**
 
@@ -409,62 +411,49 @@ Note that given examples use the following abbreviation to provide clear informa
 |    Parameter 2    | High-order byte from the starting address |
 |    Parameter 3    | Low-order byte from the data length(X)    |
 |    Parameter 4    | High-order byte from the data length(X)   |
-|   Parameter 4+1   | `1st Device` ID                         |
-|   Parameter 4+2   | `2nd Device` ID                         |
+|   Parameter 4+1   | ID of the 1st Device                      |
+|   Parameter 4+2   | ID of the 2nd Device                      |
 |         ⋯         | ⋯                                        |
-|   Parameter 4+n   | `Nnd Device` ID                         |
+|   Parameter 4+X   | ID of the X-th Device                     |
 
-|  Status Packet  | Description                             |
-| :--------------: | :-------------------------------------- |
-|   Parameter 1   | `1st Device` ID                       |
-|   Parameter 2   | `1st Device` First Byte               |
-|   Parameter 3   | `1st Device` Second Byte              |
-|        ⋯        | ⋯                                      |
-|   Parameter X   | `1st Device` X-th Byte                |
-|  Parameter X+1  | `1st Device` Low-order byte from CRC  |
-|  Parameter X+2  | `1st Device` High-order byte from CRC |
-|  Parameter X+3  | `2nd Device` Error                    |
-|  Parameter X+4  | `2nd Device` ID                       |
-| Parameter X+4+1 | `2nd Device` First Byte               |
-| Parameter X+4+2 | `2nd Device` Second Byte              |
-|        ⋯        | ⋯                                      |
-|  Parameter 2X+4  | `2nd Device` X-th Byte                |
-| Parameter 2X+4+1 | `2nd Device` Low-order byte from CRC  |
-| Parameter 2X+4+2 | `2nd Device` High-order byte from CRC |
-|        ⋯        | ⋯                                      |
-|  Parameter nX+4  | `Nnd Device` X-th Byte                |
+| Status Packet | Description |
+| :-----------: | :---------- |
+|  Parameter 1  | Frist Byte  |
+|  Parameter 2  | Second Byte |
+|      ...      | ...         |
+|  Parameter X  | X-th Byte   |
+
+**Note** : Each device individually returns Status Packet for Sync Read instruction
 
 **Example**
 
-- ID1(JA40) : Present Position(580, 0x0244, 4[byte]) = 2000(0x000007D0)
-- ID2(JA40) : Present Position(580, 0x0244, 4[byte]) = 9(0x00000009)
+- ID1(JA52) : Present Position(580, 0x0244, 4[byte]) = 0(0x00000000)
+- ID2(JA52) : Present Position(580, 0x0244, 4[byte]) = 0(0x00000000)
 
 **Fast Sync Read Instruction Packet**
 
-| H1   | H2   | H3   | RSRV | Packet ID | LEN1 | LEN2 | INST | P1   | P2   | P3   | P4   | P5   | P6   | CRC 1 | CRC 2 |
-| ---- | ---- | ---- | ---- | --------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ----- | ----- |
-| 0xFF | 0xFF | 0xFD | 0x00 | 0xFE      | 0x09 | 0x00 | 0x8A | 0x44 | 0x02 | 0x04 | 0x00 | 0x01 | 0x02 | 0x72  | 0xF2  |
+| H1   | H2   | H3   | RSRV | Packet ID | LEN1 | LEN2 | INST | P1   | P2   | P3   | P4   | P5   | P6   | CRC1 | CRC2 |
+| ---- | ---- | ---- | ---- | --------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 0xFF | 0xFF | 0xFD | 0x00 | 0xFE      | 0x09 | 0x00 | 0x82 | 0x44 | 0x02 | 0x04 | 0x00 | 0x01 | 0x02 | 0xF1 | 0x7A |
 
 **ID1 Status Packet**
 
-|  H1  |  H2  |  H3  | RSRV | Packet ID | LEN1 | LEN2 | INST | ERR | ID1 |  D1  |  D2  |  D3  |  D4  | CRC1 | CRC2 |
-| :--: | :--: | :--: | :--: | :-------: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: |
-| 0xFF | 0xFF | 0xFD | 0x00 |   0xFE   | 0x11 | 0x00 | 0x55 | 0x00 | 0x01 | 0xD0 | 0x07 | 0x00 | 0x00 | 0x0C | 0x83 |
+|  H1  |  H2  |  H3  | RSRV | Packet ID | LEN1 | LEN2 | INST | ERR |  P1  |  P2  |  P3  |  P4  | CRC1 | CRC2 |
+| :--: | :--: | :--: | :--: | :-------: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: |
+| 0xFF | 0xFF | 0xFD | 0x00 |   0x01   | 0x08 | 0x00 | 0x55 | 0x00 | 0x00 | 0x00 | 0x00 | 0x00 | 0xBF | 0xB8 |
 
 **ID2 Status Packet**
 
-| ERR | ID2 |  D1  |  D2  |  D3  |  D4  | CRC1 | CRC2 |
-| :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: |
-| 0x00 | 0x02 | 0x09 | 0x00 | 0x00 | 0x00 | 0x11 | 0x40 |
+|  H1  |  H2  |  H3  | RSRV | Packet ID | LEN1 | LEN2 | INST | ERR |  P1  |  P2  |  P3  |  P4  | CRC1 | CRC2 |
+| :--: | :--: | :--: | :--: | :-------: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: |
+| 0xFF | 0xFF | 0xFD | 0x00 |   0x02   | 0x08 | 0x00 | 0x55 | 0x00 | 0x00 | 0x00 | 0x00 | 0x00 | 0x1F | 0xB2 |
 
-#### [1.6.9.Fast Sync Write]()
+#### [1.6.9.]()[Fast Sync Write(0x83/0x8B)]()
 
 **Description**
 
 - Instruction to write data from multiple devices simultaneously using one Instruction Packet
-- The Address and Data Length of the data must all be the same.
-- Status Packet will be returned in order, according to input ID in the Instruction Packet.
-- Packet ID field : 0xFE (Broadcast ID)
+- Status Packet will be returned in one packet, according to input ID in the Instruction Packet.
 
 **Packet Parameters**
 
@@ -501,32 +490,77 @@ Note that given examples use the following abbreviation to provide clear informa
 
 **Example**
 
-- ID1(JA40) : Write 150(0x00000096) to Goal Position(564, 0x0074, 4[byte])
-- ID2(JA40) : Write 170(0x000000AA) to Goal Position(564, 0x0074, 4[byte])
+- ID1(JA52) : Write 2000(0x000007D0) to Goal Position(564, 0x0234, 4[byte])
+- ID2(JA52) : Write 2000(0x000007D0) to Goal Position(564, 0x0234, 4[byte])
 
-**Fast Sync Write Instruction Packet**
+**Instruction Packet**
 
-|  H1  |  H2  |  H3  | RSRV | Packet ID | LEN1 | LEN2 | INST |  P1  |  P2  |  P3  |  P4  |
-| :--: | :--: | :--: | :--: | :-------: | :--: | :--: | :--: | :--: | :--: | :--: | :--: |
-| 0xFF | 0xFF | 0xFD | 0x00 |   0xFE   | 0x11 | 0x00 | 0x8B | 0x34 | 0x02 | 0x04 | 0x00 |
+|  H1  |  H2  |  H3  | RSRV | Packet ID | LEN1 | LEN2 | INST |  P1  |  P2  |  P3  |  P4  | P5   | P6   | P7   | P8   | P9   | P10  | P11  | P12  | P13  | P14  | CRC1 | CRC2 |
+| :--: | :--: | :--: | :--: | :-------: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 0xFF | 0xFF | 0xFD | 0x00 |   0xFE   | 0x11 | 0x00 | 0x83 | 0x34 | 0x02 | 0x04 | 0x00 | 0x01 | 0xD0 | 0x07 | 0x00 | 0x00 | 0x02 | 0xD0 | 0x07 | 0x00 | 0x00 | 0xEE | 0x8D |
 
-|  P5  |  P6  |  P7  |  P8  |  P9  | P10 | P11 | P12 | P13 | P14 | CRC 1 | CRC 2 |
-| :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :---: | :---: |
-| 0x01 | 0x96 | 0x00 | 0x00 | 0x00 | 0x02 | 0xAA | 0x00 | 0x00 | 0x00 | 0xB2 | 0x8F |
+***此处还未改*Status Packet: The Paraments contains the present position at the time when the goal position is synchronously written.**
+
+|  H1  |  H2  |  H3  | RSRV | Packet ID | LEN1 | LEN2 | INST | ERR |  P1  |  P2  |  P3  | P4   | P5   | CRC1 | CRC2 |
+| :--: | :--: | :--: | :--: | :-------: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | ---- | ---- | ---- | ---- |
+| 0xFF | 0xFF | 0xFD | 0x00 |   0xFE   | 0x09 | 0x00 | 0x55 | 0x00 | 0x01 | 0x86 | 0x8B | 0x00 | 0x02 | CRC1 | CRC2 |
+
+#### 1.7.0.[Fast Sync Read(0x8A)]()
+
+**Description**
+
+* Enhanced Instruction for faster communication compared to Sync Read
+* One Status Packet is structured and returned for all actuators if using Fast Sync Read Instruction regardless of number of actuators chained, as if one actuator returns Status Packet.
+
+**Packet Parameters**
+
+| Instruction Packet | Description                               |
+| :----------------: | :---------------------------------------- |
+|    Parameter 1    | Low-order byte from the starting address  |
+|    Parameter 2    | High-order byte from the starting address |
+|    Parameter 3    | Low-order byte from the data length(X)    |
+|    Parameter 4    | High-order byte from the data length(X)   |
+|   Parameter 4+1   | `1st Device` ID                         |
+|   Parameter 4+2   | `2nd Device` ID                         |
+|         ⋯         | ⋯                                        |
+|   Parameter 4+n   | `Nnd Device` ID                         |
+
+|  Status Packet  | Description                             |
+| :--------------: | :-------------------------------------- |
+|   Parameter 1   | `1st Device` ID                       |
+|   Parameter 2   | `1st Device` First Byte               |
+|   Parameter 3   | `1st Device` Second Byte              |
+|        ⋯        | ⋯                                      |
+|   Parameter X   | `1st Device` X-th Byte                |
+|  Parameter X+1  | `1st Device` Low-order byte from CRC  |
+|  Parameter X+2  | `1st Device` High-order byte from CRC |
+|  Parameter X+3  | `2nd Device` Error                    |
+|  Parameter X+4  | `2nd Device` ID                       |
+| Parameter X+4+1 | `2nd Device` First Byte               |
+| Parameter X+4+2 | `2nd Device` Second Byte              |
+|        ⋯        | ⋯                                      |
+|  Parameter 2X+4  | `2nd Device` X-th Byte                |
+| Parameter 2X+4+1 | `2nd Device` Low-order byte from CRC  |
+| Parameter 2X+4+2 | `2nd Device` High-order byte from CRC |
+|        ⋯        | ⋯                                      |
+|  Parameter nX+4  | `Nnd Device` X-th Byte                |
+
+**Example**
+
+- ID1(JA52) : Present Position(580, 0x0244, 4[byte]) = 0(0x00000000)
+- ID2(JA52) : Present Position(580, 0x0244, 4[byte]) = 0(0x00000000)
+
+**Instruction Packet**
+
+| H1   | H2   | H3   | RSRV | Packet ID | LEN1 | LEN2 | INST | P1   | P2   | P3   | P4   | P5   | P6   | CRC1 | CRC2 |
+| ---- | ---- | ---- | ---- | --------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 0xFF | 0xFF | 0xFD | 0x00 | 0xFE      | 0x0A | 0x00 | 0x8A | 0x44 | 0x02 | 0x04 | 0x00 | 0x01 | 0x02 | 0x72 | 0xF2 |
 
 **Status Packet**
 
-**ID 1 Status Packet**
-
-|  H1  |  H2  |  H3  | RSRV | Packet ID | LEN1 | LEN2 | INST | ERR | ID1 | CRC1 | CRC2 |
-| :--: | :--: | :--: | :--: | :-------: | :--: | :--: | :--: | :--: | :--: | :--: | :--: |
-| 0xFF | 0xFF | 0xFD | 0x00 |   0xFE   | 0x09 | 0x00 | 0x55 | 0x00 | 0x01 | 0x86 | 0x8B |
-
-**ID 2 Status Packet**
-
-| ERR | ID2 | CRC1 | CRC2 |
-| :--: | :--: | :--: | :--: |
-| 0x00 | 0x07 | 0xEB | 0x64 |
+|  H1  |  H2  |  H3  | RSRV | Packet ID | LEN1 | LEN2 | INST | ERR |  P1  |  P2  |  P3  |  P4  |  P5  |  P6  |  P7  | P8   | P9   | P10  | P11  | P12  | P13  | P14  | CRC1 | CRC2 |
+| :--: | :--: | :--: | :--: | :-------: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 0xFF | 0xFF | 0xFD | 0x00 |   0xFE   | 0x11 | 0x00 | 0x55 | 0x00 | 0x01 | 0x00 | 0x00 | 0x00 | 0x00 | 0x47 | 0x47 | 0x43 | 0x00 | 0x02 | 0x00 | 0x00 | 0x00 | 0x00 | 0xA8 | 0x44 |
 
 ## [2.Control Table](#control-table)
 
